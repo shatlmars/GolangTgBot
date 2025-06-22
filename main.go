@@ -1,19 +1,22 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"log"
-	"main/clients/telegram"
 )
 
 func main() {
 
-	// fmt.Println(t)
-	tgClient := telegram.New("api.telegram.org", mustToken())
-	// token = flags.Get(token)
-	//fetcher = fetcher.New()
-	//consumer.Start()
-	//
+	// // fmt.Println(t)
+	// tgClient := telegram.New("api.telegram.org", "8096732712:AAFwSHFTtjK9_-f-Zlr1GR_slPGsvCGmMdU")
+	// // token = flags.Get(token)
+	// //fetcher = fetcher.New()
+	// //consumer.Start()
+	// //
+
+	// tgClient.SendMessage(295673061, "Hello")
+	err := errors.New("sd")
 }
 
 func mustToken() string {

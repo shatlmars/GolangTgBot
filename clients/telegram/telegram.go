@@ -31,13 +31,14 @@ func newBasePath(token string) string {
 
 func (c *Client) SendMessage(chat_id int, text string) error {
 	q := url.Values{}
+
 	q.Add("chat_id", strconv.Itoa(chat_id))
 	q.Add("text", text)
 	_, err := c.doRequest("sendMessage", q)
 	if err != nil {
 		return err
 	}
-
+	fmt.Println(q.Encode())
 	return nil
 }
 
