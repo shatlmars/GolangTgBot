@@ -1,27 +1,26 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"log"
+	"main/clients/telegram"
+)
+
+const (
+	hostTg = "api.telegram.org"
 )
 
 func main() {
+	tgClient = telegram.New(hostTg, mustToken())
 
-	// // fmt.Println(t)
-	// tgClient := telegram.New("api.telegram.org", "8096732712:AAFwSHFTtjK9_-f-Zlr1GR_slPGsvCGmMdU")
-	// // token = flags.Get(token)
-	// //fetcher = fetcher.New()
-	// //consumer.Start()
-	// //
+	//fetcher = fethcer.New()
+	//proccessor = proccessof.New()
 
-	// tgClient.SendMessage(295673061, "Hello")
-	err := errors.New("sd")
+	//consumer.Start(fetcher, proccessor)
+	// tgClient.SendMessage()
 }
 
 func mustToken() string {
-
-	//bot -tg-bot-token 'my token'
 	token := flag.String("token-bot-token",
 		"",
 		"token for access to telegram bot")
@@ -29,7 +28,5 @@ func mustToken() string {
 	if *token == "" {
 		log.Fatal("token is not specified")
 	}
-
 	return *token
-
 }
