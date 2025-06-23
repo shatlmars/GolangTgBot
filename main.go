@@ -11,13 +11,12 @@ const (
 )
 
 func main() {
-	tgClient = telegram.New(hostTg, mustToken())
+	tgClient := telegram.New(hostTg, mustToken())
+	//fetcher = fetcher.NEW
+	//proccessor = proccessor.New()
+	//consumer = consumer.New(fetcher, proccessor)
+	tgClient.Updates(1, 1)
 
-	//fetcher = fethcer.New()
-	//proccessor = proccessof.New()
-
-	//consumer.Start(fetcher, proccessor)
-	// tgClient.SendMessage()
 }
 
 func mustToken() string {
