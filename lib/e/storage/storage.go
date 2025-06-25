@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"main/lib/e"
+	"time"
 )
 
 type Storage interface {
@@ -17,12 +18,11 @@ type Storage interface {
 type Page struct {
 	URL      string
 	UserName string
-	// Created time
+	Created  time.Time
 }
 
 func (p Page) Hash() (string, error) {
 	h := sha1.New()
-
 	if _, err := io.WriteString(h, p.URL); err != nil {
 		return "", e.Wrap("can't calculate hash", err)
 	}
@@ -31,6 +31,9 @@ func (p Page) Hash() (string, error) {
 		return "", e.Wrap("can't calculate hash", err)
 	}
 
-	return fmt.Sprintf("%x", h.Sum(nil)), nil
+	// if _, err := io.WriteString(h, p); err != nil {
+	// 	return "", e.Wrap("can't calculate hash", err)
+	// }
 
+	return fmt.Sprintf("%x", h.Sum(nil)), nil
 }

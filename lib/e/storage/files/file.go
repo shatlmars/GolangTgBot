@@ -2,7 +2,10 @@ package files
 
 import (
 	"encoding/gob"
+<<<<<<< HEAD
 	"errors"
+=======
+>>>>>>> 91625fc (123)
 	"main/lib/e"
 	"main/lib/e/storage"
 	"math/rand"
@@ -71,8 +74,26 @@ func (s Storage) PickRandom(username string) (page *storage.Page, err error) {
 
 func (s Storage) Remove(page *storage.Page) {
 
+	fName, err := fileName(page)
+	if err != nil {
+		return err
+	}
+
+	fPath = filepath.Join(fPath, fName)
+
+	file, err := os.Create(fPath)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = file.Close() }()
+	if err := gob.NewEncoder(file).Encode(page); err != nil {
+		return err
+	}
+
+	return nil
 }
 
+<<<<<<< HEAD
 func (s Storage) decodePage(filePath string) (*storage.Page, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -90,3 +111,10 @@ func (s Storage) decodePage(filePath string) (*storage.Page, error) {
 func fName(p *storage.Page) (string, error) {
 	return p.Hash()
 }
+=======
+func fileName(p *storage.Page) (string, error) {
+	return p.Hash()
+}
+
+// func (s Storage)
+>>>>>>> 91625fc (123)

@@ -2,7 +2,7 @@ package telegram
 
 import "main/clients/telegram"
 
-type Processor struct {
+type TgProcessor struct {
 	tg     *telegram.Client
 	offset int
 	//storage
