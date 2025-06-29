@@ -10,13 +10,13 @@ const (
 	hostTg = "api.telegram.org"
 )
 
+const (
+	host = "localhost"
+)
+
 func main() {
 	tgClient := telegram.New(hostTg, mustToken())
-	//fetcher = fetcher.NEW
-	//proccessor = proccessor.New()
-	//consumer = consumer.New(fetcher, proccessor)
 	tgClient.Updates(1, 1)
-
 }
 
 func mustToken() string {

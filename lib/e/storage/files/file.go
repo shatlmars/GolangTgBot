@@ -2,10 +2,8 @@ package files
 
 import (
 	"encoding/gob"
-<<<<<<< HEAD
 	"errors"
-=======
->>>>>>> 91625fc (123)
+	"fmt"
 	"main/lib/e"
 	"main/lib/e/storage"
 	"math/rand"
@@ -69,31 +67,44 @@ func (s Storage) PickRandom(username string) (page *storage.Page, err error) {
 
 	file := files[n]
 
-	return s.decodePage(filepath.Join(path, file.Name())), nil
+	return s.decodePage(filepath.Join(path, file.Name()))
 }
 
-func (s Storage) Remove(page *storage.Page) {
-
-	fName, err := fileName(page)
+func (s Storage) Remove(page *storage.Page) error {
+	fileName, err := fName(page)
 	if err != nil {
-		return err
+		return e.Wrap("can't remove file", err)
 	}
 
-	fPath = filepath.Join(fPath, fName)
-
-	file, err := os.Create(fPath)
-	if err != nil {
-		return err
+	path := filepath.Join(s.PathToFolder, page.UserName, fileName)
+	if err := os.Remove(path); err != nil {
+		msg := fmt.Sprintf("can't remove file %s", path)
+		e.Wrap(msg, err)
 	}
-	defer func() { _ = file.Close() }()
-	if err := gob.NewEncoder(file).Encode(page); err != nil {
-		return err
-	}
-
 	return nil
 }
 
-<<<<<<< HEAD
+func (s Storage) IsExsist(page *storage.Page) (bool, error) {
+	// defer func(){}()
+
+	fileName, err := fName(page)
+	if err != nil {
+		return false, e.Wrap("can't remove file", err)
+	}
+
+	path := filepath.Join(s.PathToFolder, page.UserName, fileName)
+
+	switch _, err = os.Stat(path); {
+	case errors.Is(err, ErrNoSavedPages):
+		return false, nil
+	case err != nil:
+		msg := fmt.Sprintf("can't check if file %s exsist", path)
+		return false, e.Wrap(msg, err)
+	}
+
+	return true, nil
+}
+
 func (s Storage) decodePage(filePath string) (*storage.Page, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -106,15 +117,10 @@ func (s Storage) decodePage(filePath string) (*storage.Page, error) {
 	if err := gob.NewDecoder(f).Decode(&p); err != nil {
 		return nil, e.Wrap("can't decode file", err)
 	}
+
+	return &p, nil
 }
 
 func fName(p *storage.Page) (string, error) {
 	return p.Hash()
 }
-=======
-func fileName(p *storage.Page) (string, error) {
-	return p.Hash()
-}
-
-// func (s Storage)
->>>>>>> 91625fc (123)
